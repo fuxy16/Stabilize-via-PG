@@ -13,7 +13,7 @@ m=1; % u dim
 r=0.02;% random size for PG
 
 step = 0.001; % policy gradient step size
-num = 250;    % iteration
+num = 120;    % iteration
 ploted_num=10; % running times
 gamma = zeros(num,ploted_num);
 optimal_gamma=zeros(num,ploted_num);
@@ -28,14 +28,14 @@ for j=1:ploted_num
         % update gamma
         cost = oracle(K,Q,R,A,B,n,m,gamma(i,j));
         [alpha] = rate2(Q, R, K, cost);
-        if gamma(i,j)/(1-alpha) > 1
+        if gamma(i,j)*(1+alpha) > 1
             optimal_gamma(i+1,j)=min(get_optimal_gamma(A,B,K),1);
             gamma(i+1:num,j) = 1;
             optimal_gamma(i+1:num,j) = 1;
             break
         else
             optimal_gamma(i+1,j)=min(get_optimal_gamma(A,B,K),1);
-            gamma(i+1,j) = gamma(i,j)/(1-alpha);
+            gamma(i+1,j) = gamma(i,j)*(1+alpha);
         end
         
         % one-step PG
@@ -68,9 +68,10 @@ hold on
 h = fill([temp fliplr(temp)], [lower_optimal_gamma', fliplr(upper_optimal_gamma')], [176,224,230]/255);
 set(h,'edgealpha',0,'facealpha',0.7) 
 hold on
-set(gcf,'unit','centimeters','position',[1,2,14,8])
+set(gcf,'unit','centimeters','position',[1,2,14,6])
 
 set(gca,'FontSize',14);
 xlabel('Iteration','FontSize',14)
-ylabel('$\gamma$','FontSize',14,'Interpreter','latex','rotation',0)
-legend('optimal discount factor','adaptive discount factor','Location','northwest')
+ylabel('$\gamma$','FontSize',16,'Interpreter','latex','rotation',0)
+legend('optimal factor','adaptive factor','Location','northwest')
+grid on

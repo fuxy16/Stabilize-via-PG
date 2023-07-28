@@ -47,7 +47,8 @@ plot(optimal_gamma(1:i+1),'--','LineWidth',1.5,'color',[65 105 225]/255)
 hold on 
 plot(gamma(1:i+1),'LineWidth',1.5,'color',[255 153 18]/255)
 set(gca,'FontSize',14);
-legend('optimal discount factor','adaptive discount factor','Location','northwest')
+legend('optimal factor','adaptive factor','Location','northwest')
 xlabel('Iteration','FontSize',14)
-ylabel('$\gamma$','FontSize',14,'Interpreter','latex','rotation',0)
-set(gcf,'unit','centimeters','position',[1,2,14,8])
+ylabel('$\gamma$','FontSize',16,'Interpreter','latex','rotation',0)
+set(gcf,'unit','centimeters','position',[1,2,14,6])
+grid on

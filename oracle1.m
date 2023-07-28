@@ -12,3 +12,6 @@ for k = 1:T-1
     x(:,k+1) = sqrt(gamma)*(A*x(:,k) + B*u(:,k));
 end
 cost = sum(c);
+% if isnan(cost)>0
+%     2+2
+% end
